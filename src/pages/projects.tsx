@@ -7,7 +7,7 @@ const Projects = () => {
   return (
     <MainLayout
       title="Projects"
-      description="My all projet, I've worked on or I'm currently working on."
+      description="My all project, I've worked on or I'm currently working on."
     >
       <div className="grid gap-6">
         {ProjectData.map((project) => (
