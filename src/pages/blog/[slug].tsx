@@ -7,8 +7,6 @@ import readingTime from 'reading-time'
 //@ts-ignore
 import rehypePrism from '@mapbox/rehype-prism'
 import matter from 'gray-matter'
-import Image from 'next/image'
-import NebulaImage from '@public/img/nebula.png'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
@@ -19,14 +17,7 @@ export default function Posts({
   return (
     <BlogLayout title={frontMatter.title} description={frontMatter.excerpt}>
       <div className="mt-6 flex flex-row items-center">
-        <Image
-          className="rounded-full"
-          src={NebulaImage}
-          alt="nebula profile picture"
-          width={24}
-          height={24}
-        />
-        <p className="ml-2">
+        <p>
           <a
             className="focus:outline-none transition duration-300 ease-in-out hover:text-indigo-900 dark:hover:text-indigo-200"
             href="https://twitter.com/efeasefe1337"
@@ -38,6 +29,7 @@ export default function Posts({
           • published on {frontMatter.date} • {frontMatter.readingTime.text}
         </p>
       </div>
+
       <article className="max-w-none w-full mt-8 prose prose-lg dark:prose-dark">
         <MDXRemote {...source} components={MDXComponents} />
       </article>
@@ -61,6 +53,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params as Params
   const postContent = await getPostData(params.slug)
   const { data, content } = matter(postContent)
+
   const mdxSource = await serialize(content, {
     scope: data,
     mdxOptions: {
@@ -72,6 +65,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       rehypePlugins: [rehypePrism],
     },
   })
+
   return {
     props: {
       source: mdxSource,
